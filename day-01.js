@@ -16,14 +16,15 @@ const prepareInput = (filename) => {
     .map((e) => e.split('\n').map(Number))
     .map(sum);
 
-  sortDesc(input);
-
   return input;
 };
 
 const getMaxFromInput = (input) => Math.max(...input);
 
-const getTopThreeTotalFromInput = (input) => input.slice(0, 3).reduce((a, b) => a + b, 0);
+const getTopThreeTotalFromInput = (input) => {
+  sortDesc(input);
+  return sum(input.slice(0, 3));
+};
 
 const test = () => {
   const testInput = prepareInput(testIputFilename);
