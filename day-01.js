@@ -4,24 +4,26 @@ const fs = require('fs');
 const inputFilename = './day-01.txt';
 const testIputFilename = './day-01-test.txt';
 
+const sum = (arr) => arr.reduce((p, c) => p + c, 0);
+
+const sortDesc = (arr) => arr.sort((a, b) => (a < b ? 1 : -1));
+
 const prepareInput = (filename) => {
-  return fs
+  const input = fs
     .readFileSync(filename, 'utf8')
     .trim()
     .split('\n\n')
-    .map((e) => e.split('\n').map(Number));
+    .map((e) => e.split('\n').map(Number))
+    .map(sum);
+
+  sortDesc(input);
+
+  return input;
 };
 
-const getMaxFromInput = (array) => {
-  const totals = array.map((e) => e.reduce((a, b) => a + b, 0));
-  return Math.max(...totals);
-};
+const getMaxFromInput = (input) => Math.max(...input);
 
-const getTopThreeTotalFromInput = (array) => {
-  const totals = array.map((e) => e.reduce((a, b) => a + b, 0));
-  totals.sort((a, b) => (a < b ? 1 : -1));
-  return totals.slice(0, 3).reduce((a, b) => a + b, 0);
-};
+const getTopThreeTotalFromInput = (input) => input.slice(0, 3).reduce((a, b) => a + b, 0);
 
 const test = () => {
   const testInput = prepareInput(testIputFilename);
@@ -34,9 +36,19 @@ const test = () => {
 const run = () => {
   const input = prepareInput(inputFilename);
 
-  console.log(getMaxFromInput(input));
+  console.log(
+    'Part One:',
+    'Find the Elf carrying the most Calories.',
+    'How many total Calories is that Elf carrying?',
+    getMaxFromInput(input),
+  );
 
-  console.log(getTopThreeTotalFromInput(input));
+  console.log(
+    'Part Two:',
+    'Find the top three Elves carrying the most Calories.',
+    'How many Calories are those Elves carrying in total?',
+    getTopThreeTotalFromInput(input),
+  );
 };
 
 test();
