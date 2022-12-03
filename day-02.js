@@ -48,10 +48,36 @@ const scoreRound = ([player1Input, player2Input]) => {
   return score;
 };
 
+const partTwoMapping = {
+  A: {
+    X: 'Z',
+    Y: 'X',
+    Z: 'Y',
+  },
+  B: {
+    X: 'X',
+    Y: 'Y',
+    Z: 'Z',
+  },
+  C: {
+    X: 'Y',
+    Y: 'Z',
+    Z: 'X',
+  },
+};
+
+const scoreRoundPartTwo = ([player1Input, roundOutcome]) => {
+  const player2Input = partTwoMapping[player1Input][roundOutcome];
+
+  return scoreRound([player1Input, player2Input]);
+};
+
 const test = () => {
   const testInput = prepareInput(testIputFilename);
 
   assert.equal(sum(testInput.map(scoreRound)), 15);
+
+  assert.equal(sum(testInput.map(scoreRoundPartTwo)), 12);
 };
 
 const run = () => {
@@ -61,6 +87,12 @@ const run = () => {
     'Part One:',
     'What would your total score be if everything goes exactly according to your strategy guide?',
     sum(input.map(scoreRound)),
+  );
+
+  console.log(
+    'Part Two:',
+    'What would your total score be if everything goes exactly according to your strategy guide?',
+    sum(input.map(scoreRoundPartTwo)),
   );
 };
 
